@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ballon d'Or History | Football Legends Rankings</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Football <span>Legends</span></div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rankings.html">Rankings</a></li>
+          <li><a href="ballon.html" class="active">Ballon d'Or</a></li>
+          <li><a href="positions.html">Positions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Ballon <span>d'Or</span> History 2000–2026</h1>
+      <p class="section-sub">Every winner, runner-up, and key achievements from the modern era. Lionel Messi holds the record with 8 titles.</p>
+
+      <div style="background: linear-gradient(135deg, #D4AF37, #b8860b); color: #000; padding: 32px; border-radius: 16px; margin-bottom: 40px; text-align: center;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 8px;">Greatest Ballon d'Or Winners (2000–2026)</h2>
+        <p>1. Lionel Messi (8) • 2. Cristiano Ronaldo (5) • 3. Others with 1-2</p>
+      </div>
+
+      <div id="ballon-list"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Football Legends Rankings</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    const list = document.getElementById('ballon-list');
+    ballonWinners.forEach(b => {
+      const div = document.createElement('div');
+      div.className = 'ballon-year';
+      div.innerHTML = `
+        <div class="year-header">
+          <div class="year">${b.year}</div>
+          <div style="font-weight:700; font-size:1.3rem;">${b.winner}</div>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-top:12px; color: var(--muted);">
+          <div><strong>Club:</strong> ${b.club}</div>
+          <div><strong>Nationality:</strong> ${b.nationality}</div>
+          <div><strong>Position:</strong> ${b.position}</div>
+          <div><strong>Runner-up:</strong> ${b.runnerUp}</div>
+          <div><strong>Third:</strong> ${b.third}</div>
+        </div>
+        <p style="margin-top:12px;"><strong>Key Achievements:</strong> ${b.achievements}</p>
+      `;
+      list.appendChild(div);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Legends Rankings | Greatest Players 2000-2026</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Football <span>Legends</span></div>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="rankings.html">Rankings</a></li>
+          <li><a href="ballon.html">Ballon d'Or</a></li>
+          <li><a href="positions.html">Positions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>The Greatest <span>Footballers</span> of the Modern Era</h1>
+        <p>Rankings, statistics, and history of the legends who defined football from 2000 to 2026. From Messi and Ronaldo to the next generation.</p>
+        <a href="rankings.html" class="btn">Explore Rankings</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Top <span>10</span> Greatest Players (2000–2026)</h2>
+      <p class="section-sub">Based on achievements, peak performance, longevity, and overall impact.</p>
+      <div class="cards-grid" id="top10"></div>
+    </div>
+  </section>
+
+  <section class="section" style="background: rgba(212,175,55,0.03);">
+    <div class="container">
+      <h2 class="section-title">Best by <span>Position</span></h2>
+      <p class="section-sub">The ultimate performers in every role on the pitch.</p>
+      <div class="position-grid">
+        <div class="pos-card" onclick="location.href='positions.html#gk'"><h3>Goalkeeper</h3><p>Manuel Neuer</p></div>
+        <div class="pos-card" onclick="location.href='positions.html#def'"><h3>Defender</h3><p>Sergio Ramos</p></div>
+        <div class="pos-card" onclick="location.href='positions.html#mid'"><h3>Midfielder</h3><p>Luka Modrić</p></div>
+        <div class="pos-card" onclick="location.href='positions.html#wing'"><h3>Winger</h3><p>Mohamed Salah</p></div>
+        <div class="pos-card" onclick="location.href='positions.html#att'"><h3>Attacking Mid</h3><p>Ronaldinho</p></div>
+        <div class="pos-card" onclick="location.href='positions.html#str'"><h3>Striker</h3><p>Lionel Messi</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Latest <span>Ballon d'Or</span></h2>
+      <p class="section-sub">Harry Kane claimed the 2026 award after a stellar season with Bayern Munich and England.</p>
+      <div style="background: var(--card); border-radius: 16px; padding: 32px; display: flex; gap: 32px; align-items: center; border: 1px solid rgba(212,175,55,0.2);">
+        <div style="flex:1;">
+          <div style="font-size: 3rem; font-weight: 900; color: var(--gold);">2026</div>
+          <h3 style="font-size: 2rem; margin: 8px 0;">Harry Kane</h3>
+          <p style="color: var(--muted);">Bayern Munich • England • Striker</p>
+          <p style="margin-top: 12px;">Prolific scoring machine who finally captured major silverware and individual recognition at the highest level.</p>
+        </div>
+        <div style="text-align: right;">
+          <a href="ballon.html" class="btn">View Full History</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Football Legends Rankings. Celebrating the modern greats of the beautiful game.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    const top10 = getTopPlayers(10);
+    const container = document.getElementById('top10');
+    top10.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'player-card';
+      card.innerHTML = `
+        <div class="rank">${i+1}</div>
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x220/141a28/D4AF37?text=${encodeURIComponent(p.name.split(' ')[0])}'">
+        <div class="card-body">
+          <div class="player-name">${p.name}</div>
+          <div class="player-meta">${p.nationality} • ${p.position}</div>
+          <div class="stats">
+            <div class="stat">Goals <strong>${p.goals}</strong></div>
+            <div class="stat">Ballon <strong>${p.ballon}</strong></div>
+            <div class="stat">Rating <strong>${p.rating}</strong></div>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Rankings | Football Legends Rankings</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Football <span>Legends</span></div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rankings.html" class="active">Rankings</a></li>
+          <li><a href="ballon.html">Ballon d'Or</a></li>
+          <li><a href="positions.html">Positions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Player <span>Rankings</span></h1>
+      <p class="section-sub">Filter and sort the greatest players from 2000 to 2026 by various criteria.</p>
+
+      <div class="filters">
+        <input type="text" id="search" class="search-input" placeholder="Search player...">
+        <select id="position" class="filter-select">
+          <option value="">All Positions</option>
+          <option value="Goalkeeper">Goalkeeper</option>
+          <option value="Defender">Defender</option>
+          <option value="Midfielder">Midfielder</option>
+          <option value="Attacking Midfielder">Attacking Midfielder</option>
+          <option value="Winger">Winger</option>
+          <option value="Forward">Forward / Striker</option>
+          <option value="Striker">Striker</option>
+        </select>
+        <select id="nationality" class="filter-select">
+          <option value="">All Nationalities</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Brazil">Brazil</option>
+          <option value="France">France</option>
+          <option value="Spain">Spain</option>
+          <option value="Germany">Germany</option>
+          <option value="Croatia">Croatia</option>
+          <option value="England">England</option>
+        </select>
+        <select id="sort" class="filter-select">
+          <option value="rating">Overall Rating</option>
+          <option value="goals">Goals</option>
+          <option value="assists">Assists</option>
+          <option value="ballon">Ballon d'Or Wins</option>
+          <option value="trophies">Trophies</option>
+        </select>
+      </div>
+
+      <div id="results" class="cards-grid"></div>
+      <table class="ranking-table" id="table" style="display:none; margin-top: 32px;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Position</th>
+            <th>Nationality</th>
+            <th>Goals</th>
+            <th>Assists</th>
+            <th>Ballon</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Football Legends Rankings</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    function render(filtered) {
+      const grid = document.getElementById('results');
+      const tbody = document.getElementById('tbody');
+      grid.innerHTML = '';
+      tbody.innerHTML = '';
+      
+      filtered.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'player-card';
+        card.innerHTML = `
+          <div class="rank">${i+1}</div>
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x220/141a28/D4AF37?text=${encodeURIComponent(p.name)}'">
+          <div class="card-body">
+            <div class="player-name">${p.name}</div>
+            <div class="player-meta">${p.nationality} • ${p.position}<br>${p.clubs}</div>
+            <div class="stats">
+              <div class="stat">G <strong>${p.goals}</strong></div>
+              <div class="stat">A <strong>${p.assists}</strong></div>
+              <div class="stat">🏆 <strong>${p.trophies}</strong></div>
+              <div class="stat">BdO <strong>${p.ballon}</strong></div>
+              <div class="stat">★ <strong>${p.rating}</strong></div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${i+1}</td><td>${p.name}</td><td>${p.position}</td><td>${p.nationality}</td><td>${p.goals}</td><td>${p.assists}</td><td>${p.ballon}</td><td class="rating">${p.rating}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function applyFilters() {
+      let list = [...players];
+      const search = document.getElementById('search').value.toLowerCase();
+      const pos = document.getElementById('position').value;
+      const nat = document.getElementById('nationality').value;
+      const sortBy = document.getElementById('sort').value;
+
+      if (search) list = list.filter(p => p.name.toLowerCase().includes(search) || p.clubs.toLowerCase().includes(search));
+      if (pos) list = list.filter(p => p.position.includes(pos) || (pos === "Forward / Striker" && (p.position.includes("Forward") || p.position.includes("Striker"))));
+      if (nat) list = list.filter(p => p.nationality === nat);
+
+      list.sort((a, b) => (b[sortBy] || 0) - (a[sortBy] || 0));
+      render(list);
+    }
+
+    document.getElementById('search').addEventListener('input', applyFilters);
+    document.getElementById('position').addEventListener('change', applyFilters);
+    document.getElementById('nationality').addEventListener('change', applyFilters);
+    document.getElementById('sort').addEventListener('change', applyFilters);
+
+    applyFilters();
+  </script>
+</body>
+</html>

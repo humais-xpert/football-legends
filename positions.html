@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Position Rankings | Football Legends Rankings</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Football <span>Legends</span></div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rankings.html">Rankings</a></li>
+          <li><a href="ballon.html">Ballon d'Or</a></li>
+          <li><a href="positions.html" class="active">Positions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Position-Based <span>Rankings</span></h1>
+      <p class="section-sub">The greatest performers in every role from 2000 to 2026.</p>
+
+      <div id="gk">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Goalkeepers</h2>
+        <p>Ranked by clean sheets, saves, trophies, consistency, and peak performance.</p>
+        <div class="cards-grid" id="gk-grid"></div>
+      </div>
+
+      <div id="def">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Defenders</h2>
+        <p>Centre-backs and full-backs based on defensive impact, trophies, and awards.</p>
+        <div class="cards-grid" id="def-grid"></div>
+      </div>
+
+      <div id="mid">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Midfielders</h2>
+        <p>Defensive, central, and box-to-box based on passing, creativity, and trophies.</p>
+        <div class="cards-grid" id="mid-grid"></div>
+      </div>
+
+      <div id="wing">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Wingers</h2>
+        <p>Left and right wingers based on goals, assists, dribbling, and creativity.</p>
+        <div class="cards-grid" id="wing-grid"></div>
+      </div>
+
+      <div id="att">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Attacking Midfielders</h2>
+        <div class="cards-grid" id="att-grid"></div>
+      </div>
+
+      <div id="str">
+        <h2 style="margin: 40px 0 20px; color: var(--gold);">Strikers</h2>
+        <p>Centre-forwards ranked by goals, Golden Boots, Ballon d'Ors, and peak performance.</p>
+        <div class="cards-grid" id="str-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Football Legends Rankings</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    function renderPosition(containerId, list) {
+      const container = document.getElementById(containerId);
+      list.slice(0, 6).forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'player-card';
+        card.innerHTML = `
+          <div class="rank">${i+1}</div>
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x220/141a28/D4AF37?text=${encodeURIComponent(p.name.split(' ')[0])}'">
+          <div class="card-body">
+            <div class="player-name">${p.name}</div>
+            <div class="player-meta">${p.nationality} • Rating ${p.rating}</div>
+            <div class="stats">
+              <div class="stat">Goals <strong>${p.goals}</strong></div>
+              <div class="stat">Trophies <strong>${p.trophies}</strong></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    const gks = players.filter(p => p.position === "Goalkeeper").sort((a,b)=>b.rating-a.rating);
+    const defs = players.filter(p => p.position === "Defender").sort((a,b)=>b.rating-a.rating);
+    const mids = players.filter(p => p.position === "Midfielder").sort((a,b)=>b.rating-a.rating);
+    const wings = players.filter(p => p.position === "Winger").sort((a,b)=>b.rating-a.rating);
+    const atts = players.filter(p => p.position === "Attacking Midfielder").sort((a,b)=>b.rating-a.rating);
+    const strs = players.filter(p => p.position.includes("Striker") || p.position.includes("Forward")).sort((a,b)=>b.rating-a.rating);
+
+    renderPosition('gk-grid', gks);
+    renderPosition('def-grid', defs);
+    renderPosition('mid-grid', mids);
+    renderPosition('wing-grid', wings);
+    renderPosition('att-grid', atts);
+    renderPosition('str-grid', strs);
+  </script>
+</body>
+</html>
